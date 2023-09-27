@@ -1,17 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <!-- <router-view></router-view> -->
+      <AlbumDetail></AlbumDetail>
+      <Footer></Footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Footer from '@/components/all/footer.vue'
+import Parents from '@/test/parents.vue'
+import AlbumDetail from './views/AlbumDetail.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Footer,
+    Parents,
+    AlbumDetail,
   }
 }
 </script>
@@ -21,8 +27,19 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+a{
+  text-decoration: none;
+}
+.el-button--primary{
+  background-color: #27c31c;
+  transition: all 0.5s;
+  border: none;
+}
+.el-button--primary:hover{
+  background-color: white;
+  color: #27c31c;
+  transition: all 0.5s;
 }
 </style>
