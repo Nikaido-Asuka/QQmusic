@@ -41,7 +41,7 @@
         return index + 1;
       },
       AudioPlay(){
-        console.log("fuck your mother");
+        
       },
       getSongsBySingerId(id, skipNumber){
         console.log(id);

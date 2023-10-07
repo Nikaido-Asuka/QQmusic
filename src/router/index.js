@@ -19,6 +19,11 @@ const routes = [{
         path: '/singer/:id',
         name: 'singer',
         component: () => import('../views/Singer')
+    },{
+        path: '/albumDetail/:id',
+        name: 'albumDetail',
+        component: () => import('../views/AlbumDetail'),
+        props: true
     }
 ]
 

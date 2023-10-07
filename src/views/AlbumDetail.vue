@@ -2,7 +2,7 @@
     <div class="box">
         <div class="head">
             <div class="img">
-                <img src="https://pic.imgdb.cn/item/6500fdc0661c6c8e543d6b95.jpg"/>
+                <img :src="album.img"/>
             </div>
 
             <div class="info">
@@ -20,7 +20,7 @@
                 <div class="btn">
                     <el-button type="primary">播放音乐</el-button>
                     <el-button>收藏</el-button>
-                    <el-button>评论（23423）</el-button>
+                    <el-button>评论（ {{album.collectionNumber}} ）</el-button>
                 </div>
             </div>
         </div>
@@ -28,51 +28,89 @@
 
         <div class="content">
             <div class="content_left">
-               
+                <el-table :data="album.songArr" style="width: 100%;">
+
+                    <el-table-column
+                    type="index"
+                    label="序号"
+                    width="150"
+                    :index="indexMethod"
+                    >
+
+                    </el-table-column>
+
+
+                    <el-table-column
+                    prop="name"
+                    label="歌名"
+                    width="750">
+                        <template slot-scope="scope">
+                            <div class="song-name" @mouseover="currentIndex = scope.$index" @mouseleave="currentIndex = -1">
+                                {{ scope.row.name }}
+                                <i v-show="currentIndex === scope.$index" size="200" class="el-icon-video-play el-icon--right" @click="AudioPlay"></i>
+                            </div>
+                        </template>
+                    </el-table-column>
+
+                    <el-table-column
+                    prop="time"
+                    label="时长"
+                    >
+
+                    </el-table-column>
+
+                </el-table>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Card from '@/components/singer/Card.vue'
+import popularSongs from '@/components/singer/popularSongs.vue';
+import albumApi from '@/api/albumApi';
 export default {
     name: "AlbumDetail",
     data(){
         return {
+            currentIndex: -1, // 记录当前鼠标所在的行号
             album:{
-                "_id":  "651005d8d2e1b31e3b28ae3a",
-                "id": 2,
-                "name": "陶喆同名专辑",
-                "singerName": "陶喆",
-                "img": "https://pic.imgdb.cn/item/6500fdc0661c6c8e543d6b95.jpg",
-                "type": "录音室专辑",
-                "songArr": [{
-                    "id": 1,
-                    "name": "爱，很简单",
-                    "album": "陶喆同名专辑",
-                    "singerName": "陶喆",
-                    "musicType": "R&B",
-                    "playAmount": 1000,
-                    "rating": 5,
-                    "img": "https://pic.imgdb.cn/item/6500fdc0661c6c8e543d6b95.jpg",
-                    "color": "darkslateblue",
-                    "audioUrl": "https://3wt.music.eduingame.cn/2023/09-21/ef6ebc4c78794dbf92ce08533442338a3wcn474791.mp3",
-                    "date": "1997.12.6",
-                    "time": "4:29",
-                }],
-                "date": "1997.12.6",
+                
+                
             }
         }
     },
     mounted(){
-
+        //用this.$route.params来接收传递过来的参数
+        this.getAlbumById(this.$route.params.id);
     },
     methods:{
 
+        indexMethod(index) {
+        return index * 2 + 1;
+        },
+
+        AudioPlay(){
+            console.log("mother fucker")
+        },
+
+        getAlbumById(id){
+            albumApi.getAlbumById(id).then(response => {
+                console.log(response.data);
+                this.album = response.data.data;
+                this.album.songArr = response.data.songs;
+                console.log(this.album);
+            }).catch(err => {
+                this.$message({
+                    type:'error',
+                    showClose: true,
+                    message: err.message
+                })
+            })
+        }
+
     },
     components:{
-        Card
+        popularSongs,
     }
 }
 </script>
@@ -133,7 +171,7 @@ span{
 }
 
 .content{
-
+    height: 200px;
 }
 
 .el-button{
@@ -146,6 +184,6 @@ span{
 }
 .content_left{
     width: 80%;
-    border: 1px solid black;
+    height: 200px;
 }
 </style>

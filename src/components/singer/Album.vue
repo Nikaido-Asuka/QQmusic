@@ -10,11 +10,11 @@
 
     <div class="scroll-container">
       <div class="album">
-        <div class="image-container" v-for="(item, index) in arr" :key="index" :style="index === 0 ? {marginLeft : '0px'} : {}">
+        <div class="image-container" v-for="(item, index) in arr" :key="index" :style="index === 0 ? {marginLeft : '0px'} : {}" @click="$router.push({ path: '/albumDetail/' + item.id})">
           <div class="frosted-glass"></div>
           <img :src="item.img" alt="Image" class="image">
           <div class="text-overlay">
-            <p class="text" style="font-size: 25px; width: 150px;">{{ item.name }}</p>
+            <p class="text" style="font-size: 25px; width: 150px; text-align: center;">{{ item.name }}</p>
 
             <div class="icon_box">
               <img src="../../assets/img/三角形.png"/>
@@ -25,12 +25,16 @@
         </div>
       </div>
     </div>
+
+
+    
     
   </div>
 </template>
 
 <script>
 import albumApi from '@/api/albumApi';
+import AlbumDetail from '@/views/AlbumDetail.vue';
 export default {
   name: "Album",
   data() {
@@ -141,6 +145,7 @@ export default {
 }
 
 .text-overlay {
+  word-wrap: break-word;
   position: absolute;
   top: 50%;
   left: 50%;
