@@ -98,6 +98,7 @@ export default {
 
 <style scoped>
 .footer {
+  margin-top: 50px;
   font-size: 15px;
   font-weight: bold;
   color: #909090;
