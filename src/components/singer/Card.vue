@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <div class="item_box" v-for="(item, index) in arr" :key="item.id" @click="showMessage">
+            <div class="item_box" v-for="(item, index) in arr" :key="item.id" @click="open($event.target)">
                 <div class="img_box" @click="playAudio">
                     <img :src="item.img"/>
                 </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="row_left">
                             <img src="../../assets/img/zj.png"/>
-                            <a>流沙</a>
+                            <a>{{ item.album }}</a>
                         </div>
 
                         <div class="row_right" style="margin-right: 42px;">
@@ -54,6 +54,11 @@
                     </div>
                 </div>
             </div>
+            
+
+            <div class="down">
+
+            </div>
     </div>
 </template>
 
@@ -71,94 +76,86 @@ export default {
     props:['songArr'],
     mounted(){
             this.getAllSongs();
-           
-        },
-        methods:{
-            showMessage(){
-                this.$message({
-                type:'success',
-                message: '欢迎回来',
-                showClose: true,
-            })
-            },
-            playAudio(index) {
-                //找到音频数组的文件
-                const audio = document.getElementsByTagName('audio');
+    },
+    methods:{
+        playAudio(index) {
+        //找到音频数组的文件
+        const audio = document.getElementsByTagName('audio');
 
-                //判断是否是当前正在播放的音乐，如果是，那就做暂停播放的逻辑，没有切换
-                if(this.currentSongIndex === index){
-                    const song = this.arr[index];
-                    song.isBF = !song.isBF;
-                    //找到正确的音频文件
-                    if(song.isBF){
-                        audio[index].play();
-                        this.currentSongIndex = index;
-                    }else{
-                        audio[index].pause();
-                    }
-                    console.log(song);
-                    return ;
-                }
-
-
-
-                //进行判断当前是否有音乐正在播放，如果有，就停止
-                if(this.currentSongIndex !== -1){
-                    audio[this.currentSongIndex].currentTime = 0;
-                    this.arr[this.currentSongIndex].isBF = false;
-                    audio[this.currentSongIndex].pause();
-                }
-
-
-                //初次放音乐
-                //切换要播放的那首歌的播放状态
-                const song = this.arr[index];
-                song.isBF = !song.isBF;
-                //找到正确的音频文件
-                if(song.isBF){
-                    audio[index].play();
-                    this.currentSongIndex = index;
-                }else{
-                    audio[index].pause();
-                }
-                
-            },
-            
-            getAllSongs(){
-                songApi.getAllSongs()
-                    .then(response => {
-                        const {data} = response.data;
-                        //这是es6语法糖，给每一个对象添加一个isBF的属性
-                        this.arr = data.map(item => ({...item, isBF: false}));
-                        this.$message({
-                            type:'success',
-                            message: '请求成功！',
-                            showClose: true,
-                        })
-                    })
-                    .catch(err => {console.log(err)});
-            },
-
-            searchSong(event){
-                if(event.keyCode === 13){
-                    console.log(this.keyWord);
-
-                    fetch("http://localhost:3000/song/getSongByName/" + this.keyWord)
-                        .then((response)=>{
-                            if(response.ok){
-                                return response.json();
-                            }else{
-                                throw new Error("请求失败！");
-                            }
-                        })
-                        .then((data) => {
-                            this.arr = data.data;
-                        })
-                        .catch(err => console.log(err));
-                }
+        //判断是否是当前正在播放的音乐，如果是，那就做暂停播放的逻辑，没有切换
+        if(this.currentSongIndex === index){
+            const song = this.arr[index];
+            song.isBF = !song.isBF;
+            //找到正确的音频文件
+            if(song.isBF){
+                audio[index].play();
+                this.currentSongIndex = index;
+            }else{
+                audio[index].pause();
             }
-           
+            console.log(song);
+            return ;
         }
+
+
+
+        //进行判断当前是否有音乐正在播放，如果有，就停止
+        if(this.currentSongIndex !== -1){
+            audio[this.currentSongIndex].currentTime = 0;
+            this.arr[this.currentSongIndex].isBF = false;
+            audio[this.currentSongIndex].pause();
+        }
+
+        //初次放音乐
+        //切换要播放的那首歌的播放状态
+        const song = this.arr[index];
+        song.isBF = !song.isBF;
+        //找到正确的音频文件
+        if(song.isBF){
+            audio[index].play();
+            this.currentSongIndex = index;
+        }else{
+            audio[index].pause();
+        }
+            
+        },
+        
+        getAllSongs(){
+            songApi.getAllSongs()
+                .then(response => {
+                    const {data} = response.data;
+                    //这是es6语法糖，给每一个对象添加一个isBF的属性
+                    this.arr = data.map(item => ({...item, isBF: false}));
+                    console.log(this.arr);
+                    this.$message({
+                        type:'success',
+                        message: '请求成功！',
+                        showClose: true,
+                    })
+                })
+                .catch(err => {console.log(err)});
+        },
+
+        searchSong(event){
+            if(event.keyCode === 13){
+                console.log(this.keyWord);
+
+                fetch("http://localhost:3000/song/getSongByName/" + this.keyWord)
+                    .then((response)=>{
+                        if(response.ok){
+                            return response.json();
+                        }else{
+                            throw new Error("请求失败！");
+                        }
+                    })
+                    .then((data) => {
+                        this.arr = data.data;
+                    })
+                    .catch(err => console.log(err));
+            }
+        }
+        
+    }
 
 }
 </script>
@@ -170,10 +167,12 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-left: 20px;
+    flex-wrap: wrap;
     margin-right: 20px;
 }
 
 .item_box{
+    flex-basis: calc(33.33% - 20px);
     width: 270px;
     border-radius: 12px;
     margin-top: 20px;
@@ -188,12 +187,11 @@ export default {
     overflow: hidden;
     height: 200px;
     /* 为图片设置一个过渡效果，这里我们使用transform属性，并设置过渡时间为0.3秒，过渡效果使用ease-in-out来让动画看起来更平滑 */
-    transition: transform 0.3s ease-in-out;;
+    transition: transform 1s ease-in-out;
 }
 img{
     width: 200px;
     height: 200px;
-    
 }
 .img_box:hover{
     /* 通过改变图片的transform属性来实现放大效果，这里使用scale函数来放大图片，参数1.1表示放大到原大小的1.1倍 */
@@ -275,5 +273,9 @@ img{
     margin-top: 10px;
     text-align: center;
     font-size: 25px;
+}
+.lyric{
+    width: 270px;
+    
 }
 </style>

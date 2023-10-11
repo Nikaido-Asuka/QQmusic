@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-      <router-view></router-view>
+      <!-- <router-view></router-view> -->
       <!-- <AlbumDetail></AlbumDetail> -->
-      <Footer></Footer>
+      <My></My>
+      <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -11,6 +12,8 @@
 import Footer from '@/components/all/footer.vue'
 import Parents from '@/test/parents.vue'
 import AlbumDetail from './views/AlbumDetail.vue';
+import My from './views/My.vue';
+import Card from './components/singer/Card.vue';
 
 export default {
   name: 'App',
@@ -18,6 +21,8 @@ export default {
     Footer,
     Parents,
     AlbumDetail,
+    My,
+    Card
   }
 }
 </script>
@@ -31,6 +36,7 @@ export default {
 }
 a{
   text-decoration: none;
+  color: black;
 }
 .el-button--primary{
   background-color: #27c31c;

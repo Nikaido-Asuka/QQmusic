@@ -128,6 +128,7 @@ export default {
   left: 0;
   width: 250px;
   height: 250px;
+  /* 磨砂效果 */
   backdrop-filter: blur(15px);
   opacity: 0;
   border-radius: 14px;

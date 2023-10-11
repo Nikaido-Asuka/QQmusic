@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export default {
+    //获取所有收藏的歌曲
     getAllSongs(){
         return request({
             url:'/song/getAllSongs',
