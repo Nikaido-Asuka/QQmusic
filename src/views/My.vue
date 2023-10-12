@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Player ref="player"></Player>
+        <Player ref="player" :song="song"></Player>
 
         <div class="userinfo_box">
             <div class="userinfo">
@@ -45,7 +45,25 @@ export default {
     name: 'My',
     data(){
         return {
-
+            song:{
+                "id": 2,
+                "name": "流沙(Reimagined)",
+                "singer": '陶喆',
+                "album": "流沙",
+                "type": "R&B",
+                "singerName": "陶喆",
+                "musicType": "R&B",
+                "playAmount": 300,
+                "rating": 4.7,
+                "img": "https://pic.imgdb.cn/item/6500fdc0661c6c8e543d6ba4.jpg",
+                "color": "#ffa500",
+                "audioUrl": "https://3wt.music.eduingame.cn/2023/09-21/ef6ebc4c78794dbf92ce08533442338a3wcn474791.mp3",
+                "date": "2023.7.1",
+                "time": "4:51",
+                "lyrics":[
+                    {text: "", duration: ""},
+                ]
+            }
         }
     },
     components:{

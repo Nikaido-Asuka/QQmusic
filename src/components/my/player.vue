@@ -1,19 +1,19 @@
 <template>
-    <div class="bigbox" :style="'background-image: url(`https://pic.imgdb.cn/item/652149acc458853aef689498.jpg`)'">
-
+    <!-- :style="" 解决伪类元素的样式绑定 在这里 --bgurl 是一个变量名，它的值是 url() -->
+    <div class="bigbox" :style="{'--bgurl': isimg ? ('url(' + song.img + ')') : '' }">
         <div class="content">
             <div class="album">
                 <h2>正在播放:</h2>
-                <img class="rotate" src="https://pic.imgdb.cn/item/652149acc458853aef689498.jpg"/>
+                <img class="rotate" :src="song.img"/>
             </div>
 
             <div class="operate">
 
                 <div class="left">
-                    <p>I'm OK(Reimagined)</p>
-                    <p>歌手：陶喆</p>
-                    <p>专辑：<a href="javascript:;">《I'm OK》</a></p>
-                    <p>类型：R&B</p>
+                    <p>{{ song.name }}</p>
+                    <p>歌手：{{ song.singer }}</p>
+                    <p>专辑：<a href="javascript:;">《{{song.album}}》</a></p>
+                    <p>类型：{{ song.type }}</p>
                 </div>
 
                 <!-- 分为三部分 第一部分歌词 第二部分进度条 第三部分操作（上下首，重播） -->
@@ -77,10 +77,14 @@ export default {
                 // ...
             ],
             currentLyricIndex: 0,
+            isimg: false,
         }
     },
+    // 父组件向子组件传递参数需要在子组件的props里面需要加''如下
+    props: ['song'],
     created(){
-        this.formateSongs("4:51");
+        this.formateSongs(this.song.time);
+        this.isimg = true;
         this.play();
     },
     computed: {
@@ -165,20 +169,22 @@ a{
     left: 0;
     width: 100%;
     height: 100%;
-    background-position: center center;
-    background-image: url("https://pic.imgdb.cn/item/652149acc458853aef689498.jpg");
-    background-repeat: no-repeat;
+    background-image: var(--bgurl);
     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: blur(20px);
     margin-bottom: 20px;
     padding-bottom: 30px;
-    filter: blur(20px); /* 模糊效果，可以根据需要调整模糊程度 */
     z-index: -2;
 }
+
 .content{
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10!important;
 }
 .album{
     width: 300px;
@@ -191,7 +197,7 @@ a{
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    animation: rotate 10s linear infinite ;
+    animation: rotate 10s linear infinite,albumDown 4s ease;
 }
 @keyframes albumDown {
     from{
