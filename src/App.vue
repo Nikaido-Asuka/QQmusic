@@ -14,6 +14,7 @@ import Parents from '@/test/parents.vue'
 import AlbumDetail from './views/AlbumDetail.vue';
 import My from './views/My.vue';
 import Card from './components/singer/Card.vue';
+import Songsheet from './components/my/Songsheet.vue';
 
 export default {
   name: 'App',
@@ -22,7 +23,8 @@ export default {
     Parents,
     AlbumDetail,
     My,
-    Card
+    Card,
+    Songsheet
   }
 }
 </script>

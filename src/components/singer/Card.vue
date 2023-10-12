@@ -187,7 +187,7 @@ export default {
     overflow: hidden;
     height: 200px;
     /* 为图片设置一个过渡效果，这里我们使用transform属性，并设置过渡时间为0.3秒，过渡效果使用ease-in-out来让动画看起来更平滑 */
-    transition: transform 1s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 img{
     width: 200px;
@@ -196,6 +196,7 @@ img{
 .img_box:hover{
     /* 通过改变图片的transform属性来实现放大效果，这里使用scale函数来放大图片，参数1.1表示放大到原大小的1.1倍 */
     transform: scale(1.1);
+    transition: transform 0.5s ;
 }
 .box_footer{
     height: 120px;

@@ -1,7 +1,10 @@
 <template>
     <div>
+        <!-- 第一部分：播放器 -->
         <Player ref="player" :song="song"></Player>
 
+
+        <!-- 第二部分：个人信息 -->
         <div class="userinfo_box">
             <div class="userinfo">
                 <img style="width:150px; height: 150px; border-radius: 50%;" src="https://pic.imgdb.cn/item/652368cac458853aef309984.jpg"/>
@@ -28,12 +31,27 @@
 
             <div class="buttom">
                 <ul>
-                    <li @click="play">我喜欢</li>
-                    <li>自建歌单</li>
+                    <li @click="toLike">我喜欢</li>
+                    <li @click="toSheet">自建歌单</li>
                     <li>关注的歌手</li>
                 </ul>
             </div>
+        </div>
 
+
+        <!-- 第三部分：面板 -->
+        <div class="panel">
+
+            <!-- 3.1我喜欢 -->
+            <div class="like child_panel" ref="like">
+                <h2 style="font-size: 30px;">我喜欢：</h2>
+                <Card></Card>
+            </div>
+
+            <!-- 3.2自建歌单 -->
+            <div class="child_panel" ref="sheet">
+                <Songsheet></Songsheet>
+            </div>
         </div>
 
     </div>
@@ -41,6 +59,8 @@
 
 <script>
 import Player from '@/components/my/player.vue'
+import Card from '@/components/singer/Card.vue';
+import Songsheet from '@/components/my/Songsheet.vue';
 export default {
     name: 'My',
     data(){
@@ -67,22 +87,32 @@ export default {
         }
     },
     components:{
-        Player
+        Player,
+        Card,
+        Songsheet,
     },
     mounted(){
-
+        
     },
     methods:{
-        play(){
-           const playeEl = this.$refs.player.$el;
+        Tofunc(El){
+            El.scrollIntoView({ behavior: 'smooth'});
+            //    const playeEl = this.$refs.like.$el;
 
-           const top = playeEl.offsetTop;
+            //    const top = playeEl.offsetTop;
 
-           window.scrollTo({
-            top,
-            behavior: 'smooth'
-           })
+            //    window.scrollTo({
+            //     top,
+            //     behavior: 'smooth'
+            //    })
+        },
+        toLike(){
+            this.Tofunc(this.$refs.like)
+        },
+        toSheet(){
+            this.Tofunc(this.$refs.sheet)
         }
+
     }
 }
 </script>
@@ -99,6 +129,9 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 8px;
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     overflow: hidden;
 }
 .userinfo{
@@ -147,6 +180,20 @@ export default {
 }
 .buttom ul li:hover{
     color: #31c27c;
+}
+
+.panel{
+    width: 100%;
+}
+.child_panel{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.like{
+    padding-bottom: 100px;
+    border-bottom: 1px solid #efefef;
+    margin: 0 20px; 
 }
 
 </style>
