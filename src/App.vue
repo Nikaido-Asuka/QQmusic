@@ -1,40 +1,46 @@
 <template>
   <div id="app">
-      <!-- <router-view></router-view> -->
-      <!-- <AlbumDetail></AlbumDetail> -->
-      <My></My>
-      <!-- <Footer></Footer> -->
+      <router-view></router-view> 
+      <Footer></Footer>
+      <!-- <Test1></Test1> -->
+      <!-- <Children></Children> -->
+
+      <!-- <My></My> -->
+      
   </div>
 </template>
 
 <script>
 
 import Footer from '@/components/all/footer.vue'
-import Parents from '@/test/parents.vue'
+import Children from './test/children.vue';
+import Test1 from './test/test1.vue'
 import AlbumDetail from './views/AlbumDetail.vue';
 import My from './views/My.vue';
 import Card from './components/singer/Card.vue';
-import Songsheet from './components/my/Songsheet.vue';
+import focusSinger from './components/my/focusSinger.vue';
 
 export default {
   name: 'App',
   components: {
     Footer,
-    Parents,
+    Children,
     AlbumDetail,
     My,
     Card,
-    Songsheet
+    focusSinger,
+    Test1,
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "微软雅黑";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+
 }
 a{
   text-decoration: none;

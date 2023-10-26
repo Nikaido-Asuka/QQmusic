@@ -33,7 +33,7 @@
                 <ul>
                     <li @click="toLike">我喜欢</li>
                     <li @click="toSheet">自建歌单</li>
-                    <li>关注的歌手</li>
+                    <li @click="toSinger">关注的歌手</li>
                 </ul>
             </div>
         </div>
@@ -52,6 +52,28 @@
             <div class="child_panel" ref="sheet">
                 <Songsheet></Songsheet>
             </div>
+
+            <!-- 3.3收藏歌手 -->
+            <div class="focus child_panel" ref="singer">
+                <focusSinger></focusSinger>
+            </div>
+
+        </div>
+
+
+        <!-- 第四部分：个性化信息 -->
+        <div class="personalization">
+
+            <!-- 4.1年度歌手 -->
+            <annualSingerList></annualSingerList>
+
+            <!-- 4.2个性颜色 -->
+            <personalColor></personalColor>
+
+            <!-- 4.音乐人格 -->
+            <musicPersonality></musicPersonality>
+
+
         </div>
 
     </div>
@@ -61,6 +83,10 @@
 import Player from '@/components/my/player.vue'
 import Card from '@/components/singer/Card.vue';
 import Songsheet from '@/components/my/Songsheet.vue';
+import focusSinger from '@/components/my/focusSinger.vue';
+import annualSingerList from '@/components/my/annualSingerList.vue';
+import personalColor from '@/components/my/personalColor.vue';
+import musicPersonality from '@/components/my/musicPersonality.vue';
 export default {
     name: 'My',
     data(){
@@ -90,6 +116,10 @@ export default {
         Player,
         Card,
         Songsheet,
+        focusSinger,
+        annualSingerList,
+        personalColor,
+        musicPersonality
     },
     mounted(){
         
@@ -111,6 +141,9 @@ export default {
         },
         toSheet(){
             this.Tofunc(this.$refs.sheet)
+        },
+        toSinger(){
+            this.Tofunc(this.$refs.singer)
         }
 
     }
@@ -190,10 +223,28 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
 }
+.focus{
+    margin: 0 20px;
+    margin-top: -100px;
+    border-top: 1px solid #efefef;
+}
 .like{
     padding-bottom: 100px;
     border-bottom: 1px solid #efefef;
     margin: 0 20px; 
+}
+
+.personalization{
+    width: 100%;
+    border-top: 1px solid #efefef;
+    margin: 0 20px;
+    margin-right: 20px;
+    padding: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+
 }
 
 </style>

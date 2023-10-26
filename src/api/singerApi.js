@@ -14,5 +14,15 @@ export default {
             url:'/singer/getSingerById/' + id,
             method: 'get'
         })
+    },
+
+
+
+    // 在focusSinger组件里面移除不再关注的歌手 
+    removeSingerById(){
+        return request({
+            url: '/singer/removeSinger/' + id,
+            method: 'delete'
+        })
     }
 }

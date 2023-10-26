@@ -170,6 +170,7 @@ export default {
     mounted(){
         //用this.$route.params来接收传递过来的参数
         this.getAlbumById(this.$route.params.id);
+        console.log(this.$route.params.id);
     },
 
     methods:{
